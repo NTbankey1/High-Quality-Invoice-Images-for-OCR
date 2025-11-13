@@ -13,7 +13,7 @@
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | **👨‍💼 Người 1 – Trưởng nhóm - Nguyễn Thái Bảo -  (Data Engineer)** | - Thu thập & import dữ liệu Kaggle vào SQL<br>- Thiết kế Database Schema<br>- Viết script SQL xử lý dữ liệu<br>- Quản lý infrastructure | MySQL, Python (SQLAlchemy, Pandas) |
 | **🧹 Người 2 – Nguyễn Hữu Dương - Data Cleaning Specialist**  | - Tiền xử lý và làm sạch dữ liệu<br>- Xử lý missing values, duplicates, outliers<br>- Chuẩn hóa format dữ liệu | Jupyter Notebook, Pandas, NumPy    |
-| **📊 Người 3 – Data Analyst**             | - Phân tích thống kê mô tả<br>- Tìm patterns và trends<br>- Phát hiện insights quan trọng<br>- Viết notebook phân tích | Jupyter Notebook, Pandas, SciPy     |
+| **📊 Người 3 – Nguyễn Hữu Dương - Data Analyst**             | - Phân tích thống kê mô tả<br>- Tìm patterns và trends<br>- Phát hiện insights quan trọng<br>- Viết notebook phân tích | Jupyter Notebook, Pandas, SciPy     |
 | **📈 Người 4 – Data Visualization**       | - Trực quan hóa dữ liệu (Seaborn, Plotly)<br>- Tạo biểu đồ tương tác<br>- Thiết kế dashboard | Matplotlib, Seaborn, Plotly         |
 | **📝 Người 5 – Report & Documentation**   | - Viết báo cáo tổng hợp<br>- Chuẩn bị slides trình bày<br>- Cập nhật README và tài liệu | Markdown, PowerPoint, LaTeX        |
 
