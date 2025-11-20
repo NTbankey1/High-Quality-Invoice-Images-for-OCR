@@ -15,7 +15,7 @@
 | **🧹 Người 2 – Nguyễn Hữu Dương - Data Cleaning Specialist**  | - Tiền xử lý và làm sạch dữ liệu<br>- Xử lý missing values, duplicates, outliers<br>- Chuẩn hóa format dữ liệu | Jupyter Notebook, Pandas, NumPy    |
 | **📊 Người 3 – Nguyễn Thanh Hải - Data Analyst**             | - Phân tích thống kê mô tả<br>- Tìm patterns và trends<br>- Phát hiện insights quan trọng<br>- Viết notebook phân tích | Jupyter Notebook, Pandas, SciPy     |
 | **📈 Người 4 - Nguyễn Quốc Cường – Data Visualization**       | - Trực quan hóa dữ liệu (Seaborn, Plotly)<br>- Tạo biểu đồ tương tác<br>- Thiết kế dashboard | Matplotlib, Seaborn, Plotly         |
-| **📝 Người 5 – Report & Documentation**   | - Viết báo cáo tổng hợp<br>- Chuẩn bị slides trình bày<br>- Cập nhật README và tài liệu | Markdown, PowerPoint, LaTeX        |
+| **📝 Người 5 – Nguyễn Đình Trí - Report & Documentation**   | - Viết báo cáo tổng hợp<br>- Chuẩn bị slides trình bày<br>- Cập nhật README và tài liệu | Markdown, PowerPoint, LaTeX        |
 
 ## 📁 Cấu Trúc Dự Án
 
