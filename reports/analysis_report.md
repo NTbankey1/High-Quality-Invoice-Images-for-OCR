@@ -1,6 +1,6 @@
 # Báo Cáo Phân Tích Tổng Hợp
 
-**Người phụ trách:** Người 5 - Report & Documentation
+**Người phụ trách:** Người 5 - Report & Documentn
 
 ## Tổng quan dự án
 
