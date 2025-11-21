@@ -8,6 +8,11 @@ python src/setup_database.py
 
 import os
 import sys
+from pathlib import Path
+
+# Thêm thư mục src vào sys.path để import config
+sys.path.insert(0, str(Path(__file__).parent))
+
 from sqlalchemy import create_engine, text
 from config import DB_CONFIG, SQL_SCHEMA_FILE
 import logging
@@ -28,26 +33,57 @@ logger = logging.getLogger(__name__)
 def read_sql_file(file_path):
     """Đọc file SQL và trả về danh sách các câu lệnh"""
     try:
+        # Convert Path object to string if needed
+        if hasattr(file_path, '__fspath__') or hasattr(file_path, 'resolve'):
+            file_path = str(file_path)
+        elif not isinstance(file_path, str):
+            file_path = str(file_path)
+        
+        # Resolve absolute path
+        file_path = os.path.abspath(file_path)
+        
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Tách các câu lệnh SQL (loại bỏ comment và empty lines)
+        # Tách các câu lệnh SQL (xử lý cả multi-line statements)
         statements = []
         current_statement = []
         
         for line in content.split('\n'):
-            line = line.strip()
-            # Bỏ qua comment và empty lines
-            if line and not line.startswith('--'):
-                current_statement.append(line)
-                # Nếu kết thúc bằng ; thì đó là một statement hoàn chỉnh
-                if line.endswith(';'):
-                    statements.append(' '.join(current_statement))
-                    current_statement = []
+            stripped_line = line.strip()
+            
+            # Bỏ qua comment lines
+            if stripped_line.startswith('--'):
+                continue
+            
+            # Bỏ qua empty lines
+            if not stripped_line:
+                continue
+            
+            # Thêm line vào current statement
+            current_statement.append(stripped_line)
+            
+            # Kiểm tra nếu kết thúc statement (có dấu ;)
+            if stripped_line.endswith(';'):
+                statement = ' '.join(current_statement)
+                # Loại bỏ dấu ; cuối cùng
+                statement = statement.rstrip(';').strip()
+                if statement:
+                    statements.append(statement)
+                current_statement = []
+        
+        # Nếu còn statement chưa kết thúc (không có dấu ;)
+        if current_statement:
+            statement = ' '.join(current_statement).strip()
+            if statement:
+                statements.append(statement)
         
         return statements
     except FileNotFoundError:
         logger.error(f"File không tồn tại: {file_path}")
+        return []
+    except Exception as e:
+        logger.error(f"Lỗi khi đọc file SQL: {str(e)}")
         return []
 
 
@@ -91,11 +127,12 @@ def setup_database():
         
         # Kiểm tra database đã được tạo
         with engine.connect() as conn:
-            result = conn.execute(text(f"""
+            # Sử dụng parameterized query để tránh SQL injection
+            result = conn.execute(text("""
                 SELECT COUNT(*) 
                 FROM information_schema.tables 
-                WHERE table_schema = '{DB_CONFIG['database']}'
-            """))
+                WHERE table_schema = :db_name
+            """), {"db_name": DB_CONFIG['database']})
             table_count = result.scalar()
             logger.info(f"✓ Database '{DB_CONFIG['database']}' có {table_count} bảng")
         

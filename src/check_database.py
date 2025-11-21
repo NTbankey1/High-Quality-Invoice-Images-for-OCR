@@ -7,7 +7,12 @@ python src/check_database.py
 """
 
 import sys
+from pathlib import Path
 from sqlalchemy import create_engine, text
+
+# Thêm thư mục src vào sys.path để import config
+sys.path.insert(0, str(Path(__file__).parent))
+
 from config import DB_CONFIG, TABLE_ORDERS
 import logging
 
@@ -34,28 +39,28 @@ def check_database():
             conn.execute(text("SELECT 1"))
             logger.info("✓ Kết nối database thành công")
             
-            # Kiểm tra bảng tồn tại
-            result = conn.execute(text(f"""
+            # Kiểm tra bảng tồn tại (sử dụng parameterized query)
+            result = conn.execute(text("""
                 SELECT COUNT(*) 
                 FROM information_schema.tables 
-                WHERE table_schema = '{DB_CONFIG['database']}' 
-                AND table_name = '{TABLE_ORDERS}'
-            """))
+                WHERE table_schema = :db_name 
+                AND table_name = :table_name
+            """), {"db_name": DB_CONFIG['database'], "table_name": TABLE_ORDERS})
             
             if result.scalar() > 0:
                 logger.info(f"✓ Bảng '{TABLE_ORDERS}' đã tồn tại")
                 
-                # Đếm số dòng
-                count_result = conn.execute(text(f"SELECT COUNT(*) FROM {TABLE_ORDERS}"))
+                # Đếm số dòng (TABLE_ORDERS là constant nên an toàn)
+                count_result = conn.execute(text(f"SELECT COUNT(*) FROM `{TABLE_ORDERS}`"))
                 row_count = count_result.scalar()
                 logger.info(f"✓ Số dòng trong bảng: {row_count:,}")
                 
-                # Kiểm tra views
-                views_result = conn.execute(text(f"""
+                # Kiểm tra views (sử dụng parameterized query)
+                views_result = conn.execute(text("""
                     SELECT table_name 
                     FROM information_schema.views 
-                    WHERE table_schema = '{DB_CONFIG['database']}'
-                """))
+                    WHERE table_schema = :db_name
+                """), {"db_name": DB_CONFIG['database']})
                 views = [row[0] for row in views_result]
                 if views:
                     logger.info(f"✓ Có {len(views)} views: {', '.join(views)}")

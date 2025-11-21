@@ -7,6 +7,24 @@
 - Tải từ "Foodpanda Order & Delivery Trends" trên Kaggle.
 - Cách sử dụng: Download file CSV → đặt vào thư mục `data/foodpanda_orders.csv` → sử dụng script `import_to_sql.py` để import.
 
+## 🚀 Bắt đầu nhanh
+
+### Setup dự án
+
+Xem file **[SETUP.md](SETUP.md)** để có hướng dẫn setup chi tiết từ đầu.
+
+**Tóm tắt các bước:**
+1. Cài đặt Python 3.8+ và MySQL 8.0+
+2. Cài đặt dependencies: `pip install -r requirements.txt`
+3. Tạo file `.env` từ `.env.example` và cấu hình database
+4. Setup database: `python src/setup_database.py`
+5. Import dữ liệu: `python src/import_to_sql.py`
+
+**Hoặc chạy script tự động:**
+```bash
+./run_demo.sh
+```
+
 ## 👥 Phân Công Nhiệm Vụ
 
 | Thành viên                                | Nhiệm vụ chính                                                                                                 | Công cụ chính                      |

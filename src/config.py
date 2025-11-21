@@ -5,9 +5,13 @@ Người phụ trách: Người 1 - Data Engineer
 
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 # Load environment variables
 load_dotenv()
+
+# Get project root directory (parent of src directory)
+PROJECT_ROOT = Path(__file__).parent.parent
 
 # Database Configuration
 DB_CONFIG = {
@@ -18,11 +22,11 @@ DB_CONFIG = {
     'port': int(os.getenv('DB_PORT', '3306'))
 }
 
-# File paths
-DATA_DIR = '../data'
-CSV_FILE = f'{DATA_DIR}/foodpanda_orders.csv'
-SQL_SCHEMA_FILE = '../sql/schema.sql'
-SQL_QUERIES_FILE = '../sql/queries.sql'
+# File paths (sử dụng absolute paths từ project root)
+DATA_DIR = PROJECT_ROOT / 'data'
+CSV_FILE = DATA_DIR / 'foodpanda_orders.csv'
+SQL_SCHEMA_FILE = PROJECT_ROOT / 'sql' / 'schema.sql'
+SQL_QUERIES_FILE = PROJECT_ROOT / 'sql' / 'queries.sql'
 
 # Table names
 TABLE_ORDERS = 'foodpanda_orders'

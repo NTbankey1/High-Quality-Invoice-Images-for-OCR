@@ -18,7 +18,11 @@ import os
 import sys
 import argparse
 from datetime import datetime
+from pathlib import Path
 import logging
+
+# Thêm thư mục src vào sys.path để import config
+sys.path.insert(0, str(Path(__file__).parent))
 
 # Import config
 from config import (
@@ -46,8 +50,8 @@ DB_PASSWORD = DB_CONFIG['password']
 DB_NAME = DB_CONFIG['database']
 DB_PORT = DB_CONFIG['port']
 
-# Use config values
-CSV_FILE_PATH = CSV_FILE
+# Use config values (convert Path to string if needed)
+CSV_FILE_PATH = str(CSV_FILE) if hasattr(CSV_FILE, '__fspath__') else CSV_FILE
 TABLE_NAME = TABLE_ORDERS
 
 
@@ -55,11 +59,14 @@ def validate_csv_file(file_path):
     """
     Validate CSV file exists and has correct structure
     """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"File không tồn tại: {file_path}")
+    # Convert Path object to string if needed
+    file_path_str = str(file_path) if hasattr(file_path, '__fspath__') else file_path
     
-    logger.info(f"Đang kiểm tra file: {file_path}")
-    file_size = os.path.getsize(file_path) / (1024 * 1024)  # MB
+    if not os.path.exists(file_path_str):
+        raise FileNotFoundError(f"File không tồn tại: {file_path_str}")
+    
+    logger.info(f"Đang kiểm tra file: {file_path_str}")
+    file_size = os.path.getsize(file_path_str) / (1024 * 1024)  # MB
     logger.info(f"Kích thước file: {file_size:.2f} MB")
     
     return True
@@ -174,12 +181,13 @@ def check_table_exists(engine, table_name):
     Kiểm tra bảng đã tồn tại chưa
     """
     with engine.connect() as conn:
-        result = conn.execute(text(f"""
+        # Sử dụng parameterized query để tránh SQL injection
+        result = conn.execute(text("""
             SELECT COUNT(*) 
             FROM information_schema.tables 
-            WHERE table_schema = '{DB_NAME}' 
-            AND table_name = '{table_name}'
-        """))
+            WHERE table_schema = :db_name 
+            AND table_name = :table_name
+        """), {"db_name": DB_NAME, "table_name": table_name})
         return result.scalar() > 0
 
 
@@ -246,12 +254,13 @@ def import_csv_to_sql(append=False, validate_only=False):
         
         # Step 9: Verify import
         with engine.connect() as conn:
-            result = conn.execute(text(f"SELECT COUNT(*) FROM {TABLE_NAME}"))
+            # TABLE_NAME là constant nên an toàn, nhưng vẫn nên dùng backticks
+            result = conn.execute(text(f"SELECT COUNT(*) FROM `{TABLE_NAME}`"))
             count = result.scalar()
             logger.info(f"✓ Tổng số dòng trong database: {count:,}")
             
             # Get sample data
-            sample = conn.execute(text(f"SELECT * FROM {TABLE_NAME} LIMIT 1"))
+            sample = conn.execute(text(f"SELECT * FROM `{TABLE_NAME}` LIMIT 1"))
             if sample.rowcount > 0:
                 logger.info("✓ Dữ liệu đã được import thành công")
         
