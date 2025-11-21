@@ -17,6 +17,7 @@ Tỷ lệ hủy đơn (Cancelled)    18.4%
 Tỷ lệ giao trễ (Delayed)     31.2%
 Insights chính
 
+<<<<<<< HEAD
 Món ăn được đặt nhiều nhất: Pizza (22.8%) > Burger (19.7%) > Sandwich/Fries
 Nhà hàng dẫn đầu: Pizza Hut (28%) > KFC (24%) > McDonald’s
 Thành phố đặt nhiều nhất: Lahore > Karachi > Islamabad
@@ -24,6 +25,9 @@ Giờ cao điểm: 18h–21h chiếm 42% tổng đơn hàng
 Hành vi khách hàng:
 Khách “Adult” chiếm 68%, đặt đơn trung bình cao hơn 42% so với Teenager
 Tỷ lệ khách rời bỏ (churned = Inactive) sau 6 tháng: 57%
+=======
+**Người phụ trách:** Người 5 - Report & Documentn
+>>>>>>> 3a22c6b4f687074a6aa14aeb257a436ff8e03638
 
 Hiệu suất OCR: EasyOCR vượt trội hoàn toàn với hóa đơn tiếng Anh + số, đặc biệt ở điều kiện ánh sáng kém và góc nghiêng
 Vấn đề phổ biến khi OCR hóa đơn thật:
