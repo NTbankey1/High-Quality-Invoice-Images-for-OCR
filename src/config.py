@@ -22,11 +22,19 @@ DB_CONFIG = {
     'port': int(os.getenv('DB_PORT', '3306'))
 }
 
+<<<<<<< Updated upstream
 # File paths (sử dụng absolute paths từ project root)
 DATA_DIR = PROJECT_ROOT / 'data'
 CSV_FILE = DATA_DIR / 'foodpanda_orders.csv'
 SQL_SCHEMA_FILE = PROJECT_ROOT / 'sql' / 'schema.sql'
 SQL_QUERIES_FILE = PROJECT_ROOT / 'sql' / 'queries.sql'
+=======
+# File paths
+DATA_DIR = '../data'
+CSV_FILE = f'{DATA_DIR}/foodpanda_orders_cleaned.csv'
+SQL_SCHEMA_FILE = '../sql/schema.sql'
+SQL_QUERIES_FILE = '../sql/queries.sql'
+>>>>>>> Stashed changes
 
 # Table names
 TABLE_ORDERS = 'foodpanda_orders'
