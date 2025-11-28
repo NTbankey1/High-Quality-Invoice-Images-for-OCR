@@ -25,6 +25,17 @@ Xem file **[SETUP.md](SETUP.md)** để có hướng dẫn setup chi tiết từ
 ./run_demo.sh
 ```
 
+### Kiểm tra môi trường
+
+Trước khi chạy, kiểm tra môi trường:
+```bash
+python src/check_environment.py
+```
+
+### Khắc phục lỗi
+
+Gặp lỗi khi chạy trên **VSCode** hoặc **Colab**? Xem file **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** để biết cách khắc phục.
+
 ## 👥 Phân Công Nhiệm Vụ
 
 | Thành viên                                | Nhiệm vụ chính                                                                                                 | Công cụ chính                      |

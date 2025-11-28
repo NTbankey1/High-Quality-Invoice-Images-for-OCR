@@ -14,16 +14,19 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from sqlalchemy import create_engine, text
-from config import DB_CONFIG, SQL_SCHEMA_FILE
+from config import DB_CONFIG, SQL_SCHEMA_FILE, PROJECT_ROOT
 import logging
 
-# Setup logging
-os.makedirs('logs', exist_ok=True)
+# Setup logging với absolute path
+logs_dir = PROJECT_ROOT / 'logs'
+logs_dir.mkdir(exist_ok=True)
+log_file = logs_dir / 'setup.log'
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('logs/setup.log'),
+        logging.FileHandler(str(log_file)),
         logging.StreamHandler()
     ]
 )

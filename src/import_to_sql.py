@@ -28,16 +28,19 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import (
     DB_CONFIG, CSV_FILE, TABLE_ORDERS, EXPECTED_COLUMNS,
     DATE_COLUMNS, NUMERIC_COLUMNS, STRING_COLUMNS,
-    IMPORT_CHUNKSIZE, IMPORT_METHOD
+    IMPORT_CHUNKSIZE, IMPORT_METHOD, PROJECT_ROOT
 )
 
-# Setup logging
-os.makedirs('logs', exist_ok=True)
+# Setup logging với absolute path
+logs_dir = PROJECT_ROOT / 'logs'
+logs_dir.mkdir(exist_ok=True)
+log_file = logs_dir / 'import.log'
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('logs/import.log'),
+        logging.FileHandler(str(log_file)),
         logging.StreamHandler()
     ]
 )

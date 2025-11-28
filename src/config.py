@@ -4,14 +4,32 @@ Người phụ trách: Người 1 - Data Engineer
 """
 
 import os
+import sys
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Load environment variables
-load_dotenv()
-
 # Get project root directory (parent of src directory)
 PROJECT_ROOT = Path(__file__).parent.parent
+
+# Add project root to sys.path to ensure imports work from any directory
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+# Load environment variables from .env file in project root
+# Try multiple locations to handle different execution contexts
+env_paths = [
+    PROJECT_ROOT / '.env',
+    Path.cwd() / '.env',
+    Path.cwd().parent / '.env',
+]
+
+for env_path in env_paths:
+    if env_path.exists():
+        load_dotenv(env_path)
+        break
+else:
+    # If no .env found, still try loading from current directory
+    load_dotenv()
 
 # Database Configuration
 DB_CONFIG = {
